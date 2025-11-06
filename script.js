@@ -7,7 +7,6 @@ let moveHistory = []; // Lưu FEN của từng nước đi
 let currentMoveIndex = -1; // Chỉ số của nước đi đang xem
 
 // (QUAN TRỌNG) Di dời các biến DOM vào bên trong onDocumentLoad
-// Lý do: Đảm bảo các element #id đã tồn tại trước khi gán
 let statusEl, pgnContainer, pgnTemplate, copyPgnBtn, fullPgnStringEl,
     btnStart, btnBack, btnNext, btnEnd,
     adminPanel, adminPassword, adminPgnInput, adminSendBtn, adminResetBtn;
@@ -21,8 +20,10 @@ const socket = io(BACKEND_URL);
 
 socket.on('connect', () => {
     console.log('Đã kết nối thành công với máy chủ Socket.IO');
-    if (statusEl) { // Kiểm tra xem statusEl đã được gán chưa
-        statusEl.textContent = 'Đã kết nối. Đang chờ dữ liệu...';
+    if (statusEl) { 
+        // (SỬA LẠI) Khi kết nối, chúng ta chưa biết Pi sẵn sàng chưa
+        // Chúng ta sẽ chờ lệnh 'game_reset' (Sẵn sàng)
+        statusEl.textContent = 'Đã kết nối. Đang chờ Pi...';
         statusEl.className = 'connected';
     }
 });
@@ -55,7 +56,7 @@ socket.on('admin_error', (data) => {
     alert(`LỖI ADMIN: ${data.message}`);
 });
 
-// LẮNG NGHE SỰ KIỆN RESET TỪ SERVER
+// (SỬA LẠI) LẮNG NGHE SỰ KIỆN RESET (TỪ PI HOẶC ADMIN)
 socket.on('game_reset', () => {
     console.log("Đã nhận lệnh RESET từ server!");
     resetGame();
@@ -64,7 +65,7 @@ socket.on('game_reset', () => {
 
 // --- LOGIC TUA LẠI VÁN CỜ ---
 
-// Hàm reset game (dùng cho client)
+// (SỬA LẠI) Hàm reset game (dùng cho client)
 function resetGame() {
     game.reset(); // Xóa logic cờ
     moveHistory = [game.fen()]; // Chỉ giữ vị trí 'start'
@@ -78,9 +79,10 @@ function resetGame() {
         fullPgnStringEl.value = ""; // Xóa ô PGN string
     }
     
+    // (SỬA LẠI) THÔNG BÁO "SẴN SÀNG" MÀ BẠN MUỐN
     if (statusEl) {
-        statusEl.textContent = "Ván cờ đã được Reset. Đang chờ ván mới...";
-        statusEl.className = 'connected';
+        statusEl.textContent = "Sẵn sàng! Đang chờ ván mới từ Pi...";
+        statusEl.className = 'connected'; // Màu xanh lá
     }
 }
 
@@ -201,8 +203,15 @@ function updatePgnDisplay() {
     });
 }
 
-// (SỬA LẠI) Hàm xử lý PGN nhận được
+// (SỬA LẠI) Hàm xử lý PGN nhận được (ĐÃ SỬA BUG ADMIN)
 function handleNewPgn(pgnString) {
+    // (SỬA LỖI BUG) Nếu PGN rỗng, nó sẽ bị bắt ở Backend
+    // Nhưng nếu nó lọt qua, chúng ta bỏ qua
+    if (pgnString === "") {
+        resetGame();
+        return;
+    }
+    
     // 1. Thử tải PGN vào logic cờ
     const success = game.load_pgn(pgnString);
     if (!success) {
@@ -237,19 +246,9 @@ function handleNewPgn(pgnString) {
         fullPgnStringEl.value = game.pgn({ newline_char: ' ' });
     }
 
-    // 5. (**** ĐÂY LÀ SỬA LỖI BUG ****)
+    // 5. (**** SỬA LỖI BUG ADMIN ****)
     // Luôn luôn nhảy đến nước đi cuối cùng.
-    // Bất kể người dùng đang tua lại hay không,
-    // vì PGN mới (từ Pi hoặc Admin) là thông tin quan trọng nhất.
     navigateToMove(moveHistory.length - 1);
-    
-    /* BỎ CODE CŨ BỊ LỖI
-    if (currentMoveIndex === -1 || currentMoveIndex === moveHistory.length - 2) {
-        navigateToMove(moveHistory.length - 1);
-    } else {
-        updateButtons();
-    }
-    */
     
     if (statusEl) {
         statusEl.textContent = `Đã nhận PGN. Tổng ${moves.length} nước đi.`;
@@ -280,9 +279,9 @@ function onDocumentLoad() {
 
     // Cập nhật trạng thái (nếu socket kết nối trước khi DOM load)
     if (socket.connected) {
-        statusEl.textContent = 'Đã kết nối. Đang chờ dữ liệu...';
+        statusEl.textContent = 'Đã kết nối. Đang chờ Pi...';
         statusEl.className = 'connected';
-    } else if (statusEl) { // Kiểm tra statusEl có tồn tại không
+    } else if (statusEl) { 
         statusEl.textContent = `Lỗi kết nối: ${BACKEND_URL} không phản hồi.`;
         statusEl.className = 'error';
     }
@@ -298,7 +297,7 @@ function onDocumentLoad() {
     board = Chessboard('myBoard', config);
     
     // 3. Khởi tạo trạng thái ban đầu
-    resetGame(); // Dùng hàm reset mới
+    resetGame(); // Dùng hàm reset mới (sẽ hiện "Sẵn sàng...")
     
     // 4. Tự động thay đổi kích thước bàn cờ khi cửa sổ thay đổi
     $(window).resize(board.resize);
