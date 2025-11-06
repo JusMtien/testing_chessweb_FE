@@ -275,7 +275,7 @@ function onDocumentLoad() {
     if (socket.connected) {
         statusEl.textContent = 'Đã kết nối. Đang chờ dữ liệu...';
         statusEl.className = 'connected';
-    } else {
+    } else if (statusEl) { // Kiểm tra statusEl có tồn tại không
         statusEl.textContent = `Lỗi kết nối: ${BACKEND_URL} không phản hồi.`;
         statusEl.className = 'error';
     }

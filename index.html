@@ -24,13 +24,24 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1 class="title">TTLAB Chess Game</h1>
+    <h1 class="title">Chess Game</h1>
 
     <!-- Trạng thái kết nối -->
     <div id="status">Đang kết nối...</div>
 
+    <!-- (SỬA LẠI) Bố cục 3 cột -->
     <div class="display-f">
-        <!-- Cột bên trái: Bàn cờ + Nút bấm + Admin -->
+        
+        <!-- (MỚI) CỘT 1: BẢNG ADMIN (Đã di chuyển) -->
+        <div id="adminPanel" style="display: none;">
+            <h3>Bảng Sửa lỗi Admin</h3>
+            <input type="password" id="adminPassword" placeholder="Mật khẩu" />
+            <textarea id="adminPgnInput" placeholder="Dán PGN chính xác vào đây..."></textarea>
+            <button id="adminSendBtn" class="admin-button-fix">Gửi PGN Sửa lỗi</button>
+            <button id="adminResetBtn" class="admin-button-reset">Reset Game (Bắt đầu ván mới)</button>
+        </div>
+
+        <!-- CỘT 2: Bàn cờ + Nút bấm -->
         <div class="board-controls-container">
             <!-- Board (Tự động scale) -->
             <div id="myBoard"></div>
@@ -42,18 +53,9 @@
                 <button id="btnNext" title="Next Move">></button>
                 <button id="btnEnd" title="Last Move (Live)">>></button>
             </div>
-
-            <!-- BẢNG ADMIN (Đã di chuyển) -->
-            <div id="adminPanel" style="display: none;">
-                <h3>Bảng Sửa lỗi Admin</h3>
-                <input type="password" id="adminPassword" placeholder="Mật khẩu" />
-                <textarea id="adminPgnInput" placeholder="Dán PGN chính xác vào đây..."></textarea>
-                <button id="adminSendBtn" class="admin-button-fix">Gửi PGN Sửa lỗi</button>
-                <button id="adminResetBtn" class="admin-button-reset">Reset Game (Bắt đầu ván mới)</button>
-            </div>
         </div>
 
-        <!-- Cột bên phải: PGN (Layout Lichess) -->
+        <!-- CỘT 3: PGN (Layout Lichess) -->
         <div class="pgn-container">
             
             <!-- Tiêu đề PGN -->
