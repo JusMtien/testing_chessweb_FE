@@ -201,7 +201,7 @@ function updatePgnDisplay() {
     });
 }
 
-// Hàm xử lý PGN nhận được
+// (SỬA LẠI) Hàm xử lý PGN nhận được
 function handleNewPgn(pgnString) {
     // 1. Thử tải PGN vào logic cờ
     const success = game.load_pgn(pgnString);
@@ -237,12 +237,19 @@ function handleNewPgn(pgnString) {
         fullPgnStringEl.value = game.pgn({ newline_char: ' ' });
     }
 
-    // 5. Quyết định xem nên nhảy đến đâu
+    // 5. (**** ĐÂY LÀ SỬA LỖI BUG ****)
+    // Luôn luôn nhảy đến nước đi cuối cùng.
+    // Bất kể người dùng đang tua lại hay không,
+    // vì PGN mới (từ Pi hoặc Admin) là thông tin quan trọng nhất.
+    navigateToMove(moveHistory.length - 1);
+    
+    /* BỎ CODE CŨ BỊ LỖI
     if (currentMoveIndex === -1 || currentMoveIndex === moveHistory.length - 2) {
         navigateToMove(moveHistory.length - 1);
     } else {
         updateButtons();
     }
+    */
     
     if (statusEl) {
         statusEl.textContent = `Đã nhận PGN. Tổng ${moves.length} nước đi.`;
