@@ -28,7 +28,7 @@ const adminSendBtn = document.getElementById('adminSendBtn');
 
 // (QUAN TRỌNG) Đổi URL này thành URL Render của bạn (BƯỚC 6)
 // Hoặc giữ 'http://localhost:8080' nếu đang test BƯỚC 4
-const BACKEND_URL = "https://testing-chessweb-fe.vercel.app/"; 
+const BACKEND_URL = "https://check-boardbe.onrender.com/"; 
 const socket = io(BACKEND_URL);
 
 socket.on('connect', () => {
