@@ -1,0 +1,230 @@
+/* Thiết lập chung */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+        Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    padding-bottom: 50px; /* Thêm padding cho Bảng Admin */
+}
+
+.title {
+    color: #1abc9c;
+    text-transform: uppercase;
+}
+
+#status {
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background-color: #34495e;
+    border: 2px solid #16a085;
+}
+
+/* Bố cục chính */
+.display-f {
+    display: flex;
+    flex-wrap: wrap; /* Cho phép xuống dòng trên màn hình nhỏ */
+    justify-content: center;
+    gap: 30px;
+    width: 100%;
+    max-width: 1100px;
+}
+
+/* Cột bên trái (Bàn cờ + Nút) */
+.board-controls-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Bàn cờ */
+#myBoard {
+    /* width: 600px; */ /* Đã set inline */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    overflow: hidden; /* Giữ cho các góc bàn cờ đẹp */
+}
+
+/* CSS CHO CÁC NÚT ĐIỀU KHIỂN (Review) */
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.controls button {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: white;
+    background-color: #3498db;
+    border: none;
+    border-radius: 8px;
+    width: 70px;
+    height: 50px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.controls button:hover {
+    background-color: #2980b9;
+}
+
+.controls button:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+/* Nút Bị vô hiệu hóa */
+.controls button:disabled {
+    background-color: #566573;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+
+/* Cột bên phải (Vùng PGN) */
+.pgn-container {
+    width: 350px;
+    min-width: 300px;
+    background-color: #34495e;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    border: 2px solid #1abc9c;
+}
+
+.pgn-container h2 {
+    text-align: center;
+    margin-top: 0;
+    color: #1abc9c;
+    border-bottom: 2px solid #16a085;
+    padding-bottom: 10px;
+}
+
+/* Cuộn PGN */
+.move-inner-content {
+    height: 480px; /* Tăng chiều cao để khớp với bàn cờ + nút */
+    overflow-y: auto; /* Thêm thanh cuộn khi PGN quá dài */
+    padding-right: 10px; /* Thêm khoảng trống cho thanh cuộn */
+}
+
+/* Tùy chỉnh thanh cuộn (như cũ) */
+.move-inner-content::-webkit-scrollbar { width: 8px; }
+.move-inner-content::-webkit-scrollbar-track { background: #2c3e50; border-radius: 4px; }
+.move-inner-content::-webkit-scrollbar-thumb { background: #16a085; border-radius: 4px; }
+.move-inner-content::-webkit-scrollbar-thumb:hover { background: #1abc9c; }
+
+/* Một hàng PGN */
+.pgn-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 5px;
+    border-bottom: 1px solid #4a6572;
+    font-size: 1.1em;
+}
+.pgn-row:last-child { border-bottom: none; }
+
+.move-number {
+    font-weight: bold;
+    color: #ecf0f1;
+    flex-basis: 15%;
+}
+
+.white-move,
+.black-move {
+    flex-basis: 40%;
+    text-align: left;
+    color: #f1c40f;
+    cursor: pointer;
+    border-radius: 4px;
+    padding: 0 4px;
+}
+.black-move { color: #e67e22; }
+
+/* CSS KHI BẤM VÀO NƯỚC ĐI */
+.white-move.selected,
+.black-move.selected {
+    background-color: #f1c40f;
+    color: #2c3e50;
+}
+.black-move.selected {
+    background-color: #e67e22;
+}
+
+/* CSS cho trạng thái kết nối */
+#status.connected {
+    background-color: #27ae60;
+    border-color: #2ecc71;
+    color: white;
+}
+#status.error {
+    background-color: #c0392b;
+    border-color: #e74c3c;
+    color: white;
+}
+
+/* (MỚI) CSS CHO BẢNG ADMIN */
+#adminPanel {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #34495e;
+    border: 2px solid #e74c3c;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 900px;
+    display: flex; /* Sắp xếp các thành phần */
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
+
+#adminPanel h3 {
+    margin: 0 0 10px 0;
+    color: #e74c3c;
+    text-align: center;
+    border-bottom: 1px solid #c0392b;
+    padding-bottom: 10px;
+}
+
+#adminPanel input,
+#adminPanel textarea {
+    font-size: 1em;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #7f8c8d;
+    background-color: #ecf0f1;
+    color: #2c3e50;
+    width: 100%;
+    box-sizing: border-box; /* Quan trọng */
+}
+
+#adminPanel textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+#adminPanel button {
+    font-size: 1.2em;
+    padding: 12px;
+    border-radius: 5px;
+    border: none;
+    background-color: #e74c3c;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#adminPanel button:hover {
+    background-color: #c0392b;
+}

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale.1.0">
+    <title>ChessWeb</title>
+
+    <!-- Tải jQuery (cần cho chessboard.js) -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    
+    <!-- Tải thư viện logic cờ (chess.js) để xử lý PGN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"
+        integrity="sha512-xRllwz2gdZciIB+AkEbeq+gVhX8VB8XsfqeFbUh+SzHlN96dEduwtTuVuc2u9EROlmW9+yhRlxjif66ORpsgVA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- Tải thư viện Socket.IO (để nói chuyện với Backend) -->
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+
+    <!-- Tải thư viện CSS của chessboard.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.css" />
+    
+    <!-- Tải file CSS của bạn -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1 class="title">Chess Game</h1>
+
+    <!-- Trạng thái kết nối -->
+    <div id="status">Đang kết nối...</div>
+
+    <div class="display-f">
+        <!-- Cột bên trái: Bàn cờ + Nút bấm -->
+        <div class="board-controls-container">
+            <!-- Board -->
+            <div id="myBoard" style="width: 600px"></div>
+            
+            <!-- NÚT BẤM ĐIỀU KHIỂN (Review) -->
+            <div class="controls">
+                <button id="btnStart" title="First Move"><<</button>
+                <button id="btnBack" title="Previous Move"><</button>
+                <button id="btnNext" title="Next Move">></button>
+                <button id="btnEnd" title="Last Move (Live)">>></button>
+            </div>
+        </div>
+
+        <!-- Cột bên phải: PGN -->
+        <div class="pgn-container">
+            <h2>PGN</h2>
+            <div class="move-inner-content">
+                <div class="move-list" id="move-list-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- (MỚI) BẢNG ĐIỀU KHIỂN ADMIN (ẨN) -->
+    <!-- Sẽ được kích hoạt bằng ?admin=true -->
+    <div id="adminPanel" style="display: none;">
+        <h3>Bảng Sửa lỗi Admin</h3>
+        <input type="password" id="adminPassword" placeholder="Mật khẩu" />
+        <textarea id="adminPgnInput" placeholder="Dán PGN chính xác vào đây..."></textarea>
+        <button id="adminSendBtn">Gửi PGN Sửa lỗi</button>
+    </div>
+
+
+    <!-- Template PGN (dùng để copy khi có nước đi mới) -->
+    <template id="pgn-template">
+        <div class="pgn-row">
+            <span class="move-number"></span>
+            <span class="white-move" data-move-index=""></span>
+            <span class="black-move" data-move-index=""></span>
+        </div>
+    </template>
+
+    <!-- Tải thư viện JS của chessboard.js (PHẢI NẰM SAU CÙNG) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.js"></script>
+    
+    <!-- Tải file JavaScript của bạn -->
+    <script src="script.js"></script>
+</body>
+</html>
