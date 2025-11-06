@@ -27,7 +27,8 @@ const adminSendBtn = document.getElementById('adminSendBtn');
 // --- CÀI ĐẶT SOCKET.IO ---
 
 // (QUAN TRỌNG) Đổi URL này thành URL Render của bạn (BƯỚC 6)
-const BACKEND_URL = "https://check-boardbe.onrender.com"; 
+// Hoặc giữ 'http://localhost:8080' nếu đang test BƯỚC 4
+const BACKEND_URL = "http://localhost:8080"; 
 const socket = io(BACKEND_URL);
 
 socket.on('connect', () => {
@@ -216,6 +217,10 @@ function onDocumentLoad() {
     const config = {
         draggable: false, // Người xem không thể kéo thả
         position: 'start', // Vị trí ban đầu
+        
+        // **** DÒNG SỬA LỖI NẰM Ở ĐÂY ****
+        // Link cũ (lỗi): '.../chesfpieces/...' (SAI)
+        // Link mới (đã sửa):
         pieceTheme: 'https://chessboardjs.com/img/chesspieces/wikipedia/{piece}.png'
     };
 
