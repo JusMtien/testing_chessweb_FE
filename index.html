@@ -30,9 +30,9 @@
     <div id="status">Đang kết nối...</div>
 
     <div class="display-f">
-        <!-- Cột bên trái: Bàn cờ + Nút bấm + (MỚI) Admin -->
+        <!-- Cột bên trái: Bàn cờ + Nút bấm + Admin -->
         <div class="board-controls-container">
-            <!-- Board (ĐÃ XÓA width: 600px) -->
+            <!-- Board (Tự động scale) -->
             <div id="myBoard"></div>
             
             <!-- NÚT BẤM ĐIỀU KHIỂN (Review) -->
@@ -43,20 +43,37 @@
                 <button id="btnEnd" title="Last Move (Live)">>></button>
             </div>
 
-            <!-- (MỚI) BẢNG ADMIN ĐÃ ĐƯỢC DI CHUYỂN VÀO ĐÂY -->
+            <!-- BẢNG ADMIN (Đã di chuyển) -->
             <div id="adminPanel" style="display: none;">
                 <h3>Bảng Sửa lỗi Admin</h3>
                 <input type="password" id="adminPassword" placeholder="Mật khẩu" />
                 <textarea id="adminPgnInput" placeholder="Dán PGN chính xác vào đây..."></textarea>
-                <button id="adminSendBtn">Gửi PGN Sửa lỗi</button>
+                <button id="adminSendBtn" class="admin-button-fix">Gửi PGN Sửa lỗi</button>
+                <button id="adminResetBtn" class="admin-button-reset">Reset Game (Bắt đầu ván mới)</button>
             </div>
         </div>
 
-        <!-- Cột bên phải: PGN -->
+        <!-- Cột bên phải: PGN (Layout Lichess) -->
         <div class="pgn-container">
-            <h2>PGN</h2>
+            
+            <!-- Tiêu đề PGN -->
+            <div class="pgn-header">
+                <h2>PGN</h2>
+            </div>
+
+            <!-- (PHẦN 1) Vùng cuộn PGN (Move List) -->
             <div class="move-inner-content">
                 <div class="move-list" id="move-list-container"></div>
+            </div>
+
+            <!-- (PHẦN 2) VÙNG PGN STRING (Giống Lichess) -->
+            <div class="pgn-string-container">
+                <textarea id="fullPgnString" readonly placeholder="Toàn bộ PGN sẽ hiện ở đây..."></textarea>
+                <button id="copyPgnBtn" title="Copy toàn bộ PGN">
+                    <!-- Icon SVG copy -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                    Copy PGN
+                </button>
             </div>
         </div>
     </div>

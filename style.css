@@ -48,7 +48,7 @@ body {
     gap: 20px; /* Thêm khoảng cách giữa các phần tử */
 }
 
-/* (MỚI) BÀN CỜ TỰ ĐỘNG SCALE */
+/* BÀN CỜ TỰ ĐỘNG SCALE */
 #myBoard {
     width: 70vh; /* Chiều rộng = 70% chiều cao màn hình */
     height: 70vh; /* Chiều cao = 70% chiều cao màn hình */
@@ -69,7 +69,6 @@ body {
     display: flex;
     justify-content: center;
     gap: 15px;
-    /* margin-top: 20px; */ /* Đã dùng 'gap' ở parent */
     width: 100%;
 }
 
@@ -106,12 +105,8 @@ body {
 
 /* Cột bên phải (Vùng PGN) */
 .pgn-container {
-    /* (MỚI) Tự động scale chiều cao */
     height: calc(70vh + 70px); /* 70vh (bàn cờ) + 70px (nút bấm) */
-    
-    /* Giới hạn */
     max-height: 770px; /* 700px + 70px */
-    
     width: 350px; /* Giữ nguyên chiều rộng PGN */
     min-width: 300px;
     
@@ -126,20 +121,30 @@ body {
     flex-direction: column;
 }
 
-.pgn-container h2 {
-    text-align: center;
-    margin-top: 0;
-    color: #1abc9c;
+/* Tiêu đề PGN */
+.pgn-header {
     border-bottom: 2px solid #16a085;
     padding-bottom: 10px;
+    margin-bottom: 10px;
 }
 
-/* Cuộn PGN */
+.pgn-container h2 {
+    text-align: center;
+    margin: 0;
+    color: #1abc9c;
+    border: none;
+    padding: 0;
+}
+
+
+/* (SỬA LẠI) Cuộn PGN (Move List) (PHẦN 1) */
 .move-inner-content {
-    /* (MỚI) Chiều cao linh hoạt */
-    flex-grow: 1; /* Tự động lấp đầy chiều cao còn lại */
-    overflow-y: auto; /* Thêm thanh cuộn khi PGN quá dài */
-    padding-right: 10px; /* Thêm khoảng trống cho thanh cuộn */
+    height: 50%; /* Chia 50% cho phần trên */
+    overflow-y: auto; 
+    padding-right: 10px; 
+    min-height: 100px; 
+    border-bottom: 1px solid #16a085; /* Thêm đường kẻ */
+    margin-bottom: 10px; /* Thêm khoảng cách */
 }
 
 /* Tùy chỉnh thanh cuộn (như cũ) */
@@ -185,6 +190,64 @@ body {
     background-color: #e67e22;
 }
 
+/* (SỬA LẠI) VÙNG PGN STRING (PHẦN 2) */
+.pgn-string-container {
+    flex-grow: 1; /* Lấp đầy 50% còn lại */
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Khoảng cách giữa textarea và nút */
+}
+
+/* (SỬA LẠI) Ô Textarea to ra */
+#fullPgnString {
+    font-family: Consolas, 'Courier New', monospace;
+    font-size: 0.9em;
+    width: 100%;
+    box-sizing: border-box;
+    flex-grow: 1; /* Tự động lấp đầy không gian */
+    min-height: 80px; /* Chiều cao tối thiểu */
+    resize: vertical; /* Cho phép kéo (chỉ chiều dọc) */
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    border: 1px solid #1abc9c;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+/* (SỬA LẠI) Nút Copy nhỏ lại */
+#copyPgnBtn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px; /* Nhỏ lại */
+    font-size: 0.9em; /* Nhỏ lại */
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background-color 0.2s;
+    width: auto; /* QUAN TRỌNG: Tự động co lại */
+    align-self: flex-end; /* Đẩy nút qua phải */
+}
+
+#copyPgnBtn:hover {
+    background-color: #2980b9;
+}
+
+#copyPgnBtn svg {
+    width: 16px; /* Nhỏ lại */
+    height: 16px; /* Nhỏ lại */
+    fill: white;
+}
+
+#copyPgnBtn.copied {
+    background-color: #27ae60;
+}
+
+
 /* CSS cho trạng thái kết nối (như cũ) */
 #status.connected {
     background-color: #27ae60;
@@ -197,28 +260,26 @@ body {
     color: white;
 }
 
-/* (MỚI) CSS CHO BẢNG ADMIN (ĐÃ SỬA LẠI VỊ TRÍ) */
+/* CSS CHO BẢNG ADMIN (như cũ) */
 #adminPanel {
-    /* margin-top: 30px; */ /* Đã dùng 'gap' ở parent */
     padding: 20px;
     background-color: #34495e;
     border: 2px solid #e74c3c;
     border-radius: 8px;
     width: 100%; /* Lấp đầy cột bên trái */
     
-    /* (MỚI) Đặt max-width bằng bàn cờ */
     max-width: 70vh; /* 70% chiều cao màn hình */
     max-width: 700px; /* Giới hạn */
 
     box-sizing: border-box;
     display: flex; 
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
 }
 
 #adminPanel h3 {
-    margin: 0 0 10px 0;
+    margin: 0 0 5px 0;
     color: #e74c3c;
     text-align: center;
     border-bottom: 1px solid #c0392b;
@@ -247,12 +308,24 @@ body {
     padding: 12px;
     border-radius: 5px;
     border: none;
-    background-color: #e74c3c;
     color: white;
     cursor: pointer;
     transition: background-color 0.2s;
+    font-weight: bold;
 }
 
-#adminPanel button:hover {
+/* Nút Sửa lỗi (Màu đỏ) */
+.admin-button-fix {
+    background-color: #e74c3c; 
+}
+.admin-button-fix:hover {
     background-color: #c0392b;
+}
+
+/* Nút Reset (Màu vàng) */
+.admin-button-reset {
+    background-color: #f39c12;
+}
+.admin-button-reset:hover {
+    background-color: #e67e22;
 }
