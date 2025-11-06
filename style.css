@@ -10,12 +10,14 @@ body {
     justify-content: center;
     min-height: 100vh;
     margin: 0;
-    padding-bottom: 50px; /* Thêm padding cho Bảng Admin */
+    padding: 20px 0; /* Thêm padding trên dưới */
+    box-sizing: border-box;
 }
 
 .title {
     color: #1abc9c;
     text-transform: uppercase;
+    margin-top: 0;
 }
 
 #status {
@@ -32,24 +34,34 @@ body {
     display: flex;
     flex-wrap: wrap; /* Cho phép xuống dòng trên màn hình nhỏ */
     justify-content: center;
+    align-items: flex-start; /* Căn ở trên cùng */
     gap: 30px;
     width: 100%;
-    max-width: 1100px;
+    max-width: 1400px; /* Tăng max-width */
 }
 
-/* Cột bên trái (Bàn cờ + Nút) */
+/* Cột bên trái (Bàn cờ + Nút + Admin) */
 .board-controls-container {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 20px; /* Thêm khoảng cách giữa các phần tử */
 }
 
-/* Bàn cờ */
+/* (MỚI) BÀN CỜ TỰ ĐỘNG SCALE */
 #myBoard {
-    /* width: 600px; */ /* Đã set inline */
+    width: 70vh; /* Chiều rộng = 70% chiều cao màn hình */
+    height: 70vh; /* Chiều cao = 70% chiều cao màn hình */
+    
+    /* Đặt giới hạn */
+    min-width: 300px;
+    min-height: 300px;
+    max-width: 700px; /* Giới hạn để không quá to */
+    max-height: 700px;
+
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
     border-radius: 8px;
-    overflow: hidden; /* Giữ cho các góc bàn cờ đẹp */
+    overflow: hidden; 
 }
 
 /* CSS CHO CÁC NÚT ĐIỀU KHIỂN (Review) */
@@ -57,7 +69,7 @@ body {
     display: flex;
     justify-content: center;
     gap: 15px;
-    margin-top: 20px;
+    /* margin-top: 20px; */ /* Đã dùng 'gap' ở parent */
     width: 100%;
 }
 
@@ -84,7 +96,6 @@ body {
     transform: translateY(2px);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
-/* Nút Bị vô hiệu hóa */
 .controls button:disabled {
     background-color: #566573;
     cursor: not-allowed;
@@ -95,13 +106,24 @@ body {
 
 /* Cột bên phải (Vùng PGN) */
 .pgn-container {
-    width: 350px;
+    /* (MỚI) Tự động scale chiều cao */
+    height: calc(70vh + 70px); /* 70vh (bàn cờ) + 70px (nút bấm) */
+    
+    /* Giới hạn */
+    max-height: 770px; /* 700px + 70px */
+    
+    width: 350px; /* Giữ nguyên chiều rộng PGN */
     min-width: 300px;
+    
     background-color: #34495e;
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
     border: 2px solid #1abc9c;
+    box-sizing: border-box;
+    
+    display: flex;
+    flex-direction: column;
 }
 
 .pgn-container h2 {
@@ -114,7 +136,8 @@ body {
 
 /* Cuộn PGN */
 .move-inner-content {
-    height: 480px; /* Tăng chiều cao để khớp với bàn cờ + nút */
+    /* (MỚI) Chiều cao linh hoạt */
+    flex-grow: 1; /* Tự động lấp đầy chiều cao còn lại */
     overflow-y: auto; /* Thêm thanh cuộn khi PGN quá dài */
     padding-right: 10px; /* Thêm khoảng trống cho thanh cuộn */
 }
@@ -125,7 +148,7 @@ body {
 .move-inner-content::-webkit-scrollbar-thumb { background: #16a085; border-radius: 4px; }
 .move-inner-content::-webkit-scrollbar-thumb:hover { background: #1abc9c; }
 
-/* Một hàng PGN */
+/* Một hàng PGN (như cũ) */
 .pgn-row {
     display: flex;
     justify-content: space-between;
@@ -152,7 +175,7 @@ body {
 }
 .black-move { color: #e67e22; }
 
-/* CSS KHI BẤM VÀO NƯỚC ĐI */
+/* CSS KHI BẤM VÀO NƯỚC ĐI (như cũ) */
 .white-move.selected,
 .black-move.selected {
     background-color: #f1c40f;
@@ -162,7 +185,7 @@ body {
     background-color: #e67e22;
 }
 
-/* CSS cho trạng thái kết nối */
+/* CSS cho trạng thái kết nối (như cũ) */
 #status.connected {
     background-color: #27ae60;
     border-color: #2ecc71;
@@ -174,16 +197,21 @@ body {
     color: white;
 }
 
-/* (MỚI) CSS CHO BẢNG ADMIN */
+/* (MỚI) CSS CHO BẢNG ADMIN (ĐÃ SỬA LẠI VỊ TRÍ) */
 #adminPanel {
-    margin-top: 30px;
+    /* margin-top: 30px; */ /* Đã dùng 'gap' ở parent */
     padding: 20px;
     background-color: #34495e;
     border: 2px solid #e74c3c;
     border-radius: 8px;
-    width: 90%;
-    max-width: 900px;
-    display: flex; /* Sắp xếp các thành phần */
+    width: 100%; /* Lấp đầy cột bên trái */
+    
+    /* (MỚI) Đặt max-width bằng bàn cờ */
+    max-width: 70vh; /* 70% chiều cao màn hình */
+    max-width: 700px; /* Giới hạn */
+
+    box-sizing: border-box;
+    display: flex; 
     flex-direction: column;
     gap: 10px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
@@ -206,7 +234,7 @@ body {
     background-color: #ecf0f1;
     color: #2c3e50;
     width: 100%;
-    box-sizing: border-box; /* Quan trọng */
+    box-sizing: border-box; 
 }
 
 #adminPanel textarea {
