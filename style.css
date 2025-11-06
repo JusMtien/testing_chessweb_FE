@@ -29,7 +29,7 @@ body {
     border: 2px solid #16a085;
 }
 
-/* Bố cục chính */
+/* Bố cục chính (3 CỘT) */
 .display-f {
     display: flex;
     flex-wrap: wrap; /* Cho phép xuống dòng trên màn hình nhỏ */
@@ -37,26 +37,68 @@ body {
     align-items: flex-start; /* Căn ở trên cùng */
     gap: 30px;
     width: 100%;
-    max-width: 1400px; /* Tăng max-width */
+    max-width: 1400px; /* (SỬA LẠI) Giảm max-width */
 }
 
-/* Cột bên trái (Bàn cờ + Nút + Admin) */
+/* (SỬA LẠI) CỘT 1 - BẢNG ADMIN */
+#adminPanel {
+    height: calc(70vh + 70px); 
+    max-height: 770px;
+    width: 300px; /* (SỬA LẠI) THU NHỎ */
+    min-width: 280px; /* (SỬA LẠI) THU NHỎ */
+    
+    padding: 20px;
+    background-color: #34495e;
+    border: 2px solid #e74c3c;
+    border-radius: 8px;
+    box-sizing: border-box;
+    display: flex; 
+    flex-direction: column;
+    gap: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    
+    order: 1; 
+}
+
+/* CỘT 2 (Bàn cờ + Nút) */
 .board-controls-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px; /* Thêm khoảng cách giữa các phần tử */
+    gap: 20px;
+    
+    order: 2;
 }
+
+/* (SỬA LẠI) CỘT 3 (Vùng PGN) */
+.pgn-container {
+    height: calc(70vh + 70px); 
+    max-height: 770px; 
+    width: 300px; /* (SỬA LẠI) THU NHỎ */
+    min-width: 280px; /* (SỬA LẠI) THU NHỎ */
+    
+    background-color: #34495e;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    border: 2px solid #1abc9c;
+    box-sizing: border-box;
+    
+    display: flex;
+    flex-direction: column;
+    
+    order: 3;
+}
+
 
 /* BÀN CỜ TỰ ĐỘNG SCALE */
 #myBoard {
-    width: 70vh; /* Chiều rộng = 70% chiều cao màn hình */
-    height: 70vh; /* Chiều cao = 70% chiều cao màn hình */
+    width: 70vh; 
+    height: 70vh;
     
-    /* Đặt giới hạn */
     min-width: 300px;
     min-height: 300px;
-    max-width: 700px; /* Giới hạn để không quá to */
+    max-width: 700px; 
     max-height: 700px;
 
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
@@ -103,25 +145,7 @@ body {
 }
 
 
-/* Cột bên phải (Vùng PGN) */
-.pgn-container {
-    height: calc(70vh + 70px); /* 70vh (bàn cờ) + 70px (nút bấm) */
-    max-height: 770px; /* 700px + 70px */
-    width: 350px; /* Giữ nguyên chiều rộng PGN */
-    min-width: 300px;
-    
-    background-color: #34495e;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-    border: 2px solid #1abc9c;
-    box-sizing: border-box;
-    
-    display: flex;
-    flex-direction: column;
-}
-
-/* Tiêu đề PGN */
+/* Tiêu đề PGN (CỘT 3) */
 .pgn-header {
     border-bottom: 2px solid #16a085;
     padding-bottom: 10px;
@@ -137,7 +161,7 @@ body {
 }
 
 
-/* (SỬA LẠI) Cuộn PGN (Move List) (PHẦN 1) */
+/* (PHẦN 1) Cuộn PGN (Move List) (Chia 50%) */
 .move-inner-content {
     height: 50%; /* Chia 50% cho phần trên */
     overflow-y: auto; 
@@ -190,7 +214,7 @@ body {
     background-color: #e67e22;
 }
 
-/* (SỬA LẠI) VÙNG PGN STRING (PHẦN 2) */
+/* (PHẦN 2) VÙNG PGN STRING (Chia 50%) */
 .pgn-string-container {
     flex-grow: 1; /* Lấp đầy 50% còn lại */
     display: flex;
@@ -198,7 +222,7 @@ body {
     gap: 10px; /* Khoảng cách giữa textarea và nút */
 }
 
-/* (SỬA LẠI) Ô Textarea to ra */
+/* Ô Textarea to ra */
 #fullPgnString {
     font-family: Consolas, 'Courier New', monospace;
     font-size: 0.9em;
@@ -214,7 +238,7 @@ body {
     padding: 10px;
 }
 
-/* (SỬA LẠI) Nút Copy nhỏ lại */
+/* Nút Copy nhỏ lại */
 #copyPgnBtn {
     background-color: #3498db;
     color: white;
@@ -260,24 +284,7 @@ body {
     color: white;
 }
 
-/* CSS CHO BẢNG ADMIN (như cũ) */
-#adminPanel {
-    padding: 20px;
-    background-color: #34495e;
-    border: 2px solid #e74c3c;
-    border-radius: 8px;
-    width: 100%; /* Lấp đầy cột bên trái */
-    
-    max-width: 70vh; /* 70% chiều cao màn hình */
-    max-width: 700px; /* Giới hạn */
-
-    box-sizing: border-box;
-    display: flex; 
-    flex-direction: column;
-    gap: 15px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-}
-
+/* CSS CHO BẢNG ADMIN (CỘT 1) */
 #adminPanel h3 {
     margin: 0 0 5px 0;
     color: #e74c3c;
@@ -301,6 +308,7 @@ body {
 #adminPanel textarea {
     height: 100px;
     resize: vertical;
+    flex-grow: 0.5; /* Cho ô PGN Admin to ra */
 }
 
 #adminPanel button {
