@@ -308,7 +308,7 @@ body {
 #adminPanel textarea {
     height: 100px;
     resize: vertical;
-    flex-grow: 0.5; /* Cho ô PGN Admin to ra */
+   /*flex-grow: 0.5;*/ /* Cho ô PGN Admin to ra */
 }
 
 #adminPanel button {
