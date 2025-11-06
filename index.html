@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale.1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ChessWeb</title>
 
     <!-- Tải jQuery (cần cho chessboard.js) -->
@@ -30,10 +30,10 @@
     <div id="status">Đang kết nối...</div>
 
     <div class="display-f">
-        <!-- Cột bên trái: Bàn cờ + Nút bấm -->
+        <!-- Cột bên trái: Bàn cờ + Nút bấm + (MỚI) Admin -->
         <div class="board-controls-container">
-            <!-- Board -->
-            <div id="myBoard" style="width: 600px"></div>
+            <!-- Board (ĐÃ XÓA width: 600px) -->
+            <div id="myBoard"></div>
             
             <!-- NÚT BẤM ĐIỀU KHIỂN (Review) -->
             <div class="controls">
@@ -41,6 +41,14 @@
                 <button id="btnBack" title="Previous Move"><</button>
                 <button id="btnNext" title="Next Move">></button>
                 <button id="btnEnd" title="Last Move (Live)">>></button>
+            </div>
+
+            <!-- (MỚI) BẢNG ADMIN ĐÃ ĐƯỢC DI CHUYỂN VÀO ĐÂY -->
+            <div id="adminPanel" style="display: none;">
+                <h3>Bảng Sửa lỗi Admin</h3>
+                <input type="password" id="adminPassword" placeholder="Mật khẩu" />
+                <textarea id="adminPgnInput" placeholder="Dán PGN chính xác vào đây..."></textarea>
+                <button id="adminSendBtn">Gửi PGN Sửa lỗi</button>
             </div>
         </div>
 
@@ -52,16 +60,6 @@
             </div>
         </div>
     </div>
-
-    <!-- (MỚI) BẢNG ĐIỀU KHIỂN ADMIN (ẨN) -->
-    <!-- Sẽ được kích hoạt bằng ?admin=true -->
-    <div id="adminPanel" style="display: none;">
-        <h3>Bảng Sửa lỗi Admin</h3>
-        <input type="password" id="adminPassword" placeholder="Mật khẩu" />
-        <textarea id="adminPgnInput" placeholder="Dán PGN chính xác vào đây..."></textarea>
-        <button id="adminSendBtn">Gửi PGN Sửa lỗi</button>
-    </div>
-
 
     <!-- Template PGN (dùng để copy khi có nước đi mới) -->
     <template id="pgn-template">
